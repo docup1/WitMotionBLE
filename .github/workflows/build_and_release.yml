@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libbluetooth-dev bluez
+
       - name: Install Qt 6 with Bluetooth module
         uses: jurplel/install-qt-action@v2
         with:
@@ -20,11 +23,18 @@ jobs:
           target: 'desktop'
           modules: 'qtbluetooth'
 
-      - name: List installed Qt modules
-        run: ls -lR $Qt6_DIR/lib/cmake  # Исправленный путь
+      - name: Verify Qt installation
+        run: |
+          echo "Qt6_DIR: $Qt6_DIR"
+          ls -l $Qt6_DIR/lib/cmake
+          ls -l $Qt6_DIR/lib/cmake/Qt6*
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_PREFIX_PATH=$Qt6_DIR  # Исправленный путь
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_PREFIX_PATH="$Qt6_DIR" \
+            -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
+            -DQt6Bluetooth_DIR="$Qt6_DIR/lib/cmake/Qt6Bluetooth"
 
       - name: Build
         run: cmake --build build --config Release
