@@ -1,0 +1,248 @@
+{
+  "version": 3,
+  "targets": {
+    "net9.0": {
+      "InTheHand.Bluetooth.Permissions/8.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/InTheHand.Bluetooth.Permissions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/InTheHand.Bluetooth.Permissions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "InTheHand.BluetoothLE/4.0.41": {
+        "type": "package",
+        "dependencies": {
+          "Linux.Bluetooth": "5.67.1"
+        },
+        "compile": {
+          "lib/net8.0/InTheHand.BluetoothLE.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/InTheHand.BluetoothLE.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Linux.Bluetooth/5.67.1": {
+        "type": "package",
+        "dependencies": {
+          "Tmds.DBus": "0.20.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Linux.Bluetooth.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Linux.Bluetooth.dll": {}
+        }
+      },
+      "Tmds.DBus/0.20.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Tmds.DBus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Tmds.DBus.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "InTheHand.Bluetooth.Permissions/8.0.2": {
+      "sha512": "iWeBCZgtGYxZ8yDCOifLesOjI9cYROafrLrFCiU0J7o25qmcAwSnDCg5ErdaBeth5xzjpaWUhHPUolx2k21Q5w==",
+      "type": "package",
+      "path": "inthehand.bluetooth.permissions/8.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "32feet-package-icon.png",
+        "README.md",
+        "inthehand.bluetooth.permissions.8.0.2.nupkg.sha512",
+        "inthehand.bluetooth.permissions.nuspec",
+        "lib/monoandroid10.0/InTheHand.Bluetooth.Permissions.dll",
+        "lib/monoandroid10.0/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net7.0-android33.0/InTheHand.Bluetooth.Permissions.aar",
+        "lib/net7.0-android33.0/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net7.0-android33.0/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net7.0-ios16.1/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net7.0-ios16.1/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net7.0-maccatalyst16.1/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net7.0-maccatalyst16.1/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net7.0-windows10.0.19041/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net7.0-windows10.0.19041/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net7.0/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net7.0/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net8.0-android34.0/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net8.0-android34.0/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net8.0-ios17.2/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net8.0-ios17.2/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net8.0-maccatalyst17.2/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net8.0-maccatalyst17.2/InTheHand.Bluetooth.Permissions.xml",
+        "lib/net8.0-windows10.0.19041/InTheHand.Bluetooth.Permissions.dll",
+        "lib/net8.0-windows10.0.19041/InTheHand.Bluetooth.Permissions.xml",
+        "lib/netstandard2.0/InTheHand.Bluetooth.Permissions.dll",
+        "lib/netstandard2.0/InTheHand.Bluetooth.Permissions.xml",
+        "lib/uap10.0.17763/InTheHand.Bluetooth.Permissions.dll",
+        "lib/uap10.0.17763/InTheHand.Bluetooth.Permissions.pri",
+        "lib/uap10.0.17763/InTheHand.Bluetooth.Permissions.xml",
+        "lib/xamarinios10/InTheHand.Bluetooth.Permissions.dll",
+        "lib/xamarinios10/InTheHand.Bluetooth.Permissions.xml"
+      ]
+    },
+    "InTheHand.BluetoothLE/4.0.41": {
+      "sha512": "pDEjREmWQjAsvRvt9gMfr9Y0zEH3qDND1zE8Pa2tATQtIYQnwNp4PZO3x9dVwRmlDzNTJHdDYoe8HOPIkXFMCg==",
+      "type": "package",
+      "path": "inthehand.bluetoothle/4.0.41",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "32feet-package-icon.png",
+        "README.md",
+        "inthehand.bluetoothle.4.0.41.nupkg.sha512",
+        "inthehand.bluetoothle.nuspec",
+        "lib/monoandroid10.0/InTheHand.BluetoothLE.dll",
+        "lib/monoandroid10.0/InTheHand.BluetoothLE.xml",
+        "lib/net8.0-android34.0/InTheHand.BluetoothLE.dll",
+        "lib/net8.0-android34.0/InTheHand.BluetoothLE.xml",
+        "lib/net8.0-ios18.0/InTheHand.BluetoothLE.dll",
+        "lib/net8.0-ios18.0/InTheHand.BluetoothLE.xml",
+        "lib/net8.0-maccatalyst18.0/InTheHand.BluetoothLE.dll",
+        "lib/net8.0-maccatalyst18.0/InTheHand.BluetoothLE.xml",
+        "lib/net8.0-windows10.0.19041/InTheHand.BluetoothLE.dll",
+        "lib/net8.0-windows10.0.19041/InTheHand.BluetoothLE.xml",
+        "lib/net8.0/InTheHand.BluetoothLE.dll",
+        "lib/net8.0/InTheHand.BluetoothLE.xml",
+        "lib/netstandard2.0/InTheHand.BluetoothLE.dll",
+        "lib/netstandard2.0/InTheHand.BluetoothLE.xml",
+        "lib/uap10.0.17763/InTheHand.BluetoothLE.dll",
+        "lib/uap10.0.17763/InTheHand.BluetoothLE.pri",
+        "lib/uap10.0.17763/InTheHand.BluetoothLE.xml",
+        "lib/xamarinios10/InTheHand.BluetoothLE.dll",
+        "lib/xamarinios10/InTheHand.BluetoothLE.xml",
+        "lib/xamarintvos10/InTheHand.BluetoothLE.dll",
+        "lib/xamarintvos10/InTheHand.BluetoothLE.xml",
+        "lib/xamarinwatchos10/InTheHand.BluetoothLE.dll",
+        "lib/xamarinwatchos10/InTheHand.BluetoothLE.xml"
+      ]
+    },
+    "Linux.Bluetooth/5.67.1": {
+      "sha512": "DkSxrPTWGn6Wx0d+/HfCsy/F82Ttfb9DLnWVqBDem46zftrm75UDx0seP6Ii0EljjWTu9Dwgb9T3QzzdSQr5Ow==",
+      "type": "package",
+      "path": "linux.bluetooth/5.67.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Linux.Bluetooth-128x128.png",
+        "README.md",
+        "lib/netstandard2.0/Linux.Bluetooth.dll",
+        "linux.bluetooth.5.67.1.nupkg.sha512",
+        "linux.bluetooth.nuspec"
+      ]
+    },
+    "Tmds.DBus/0.20.0": {
+      "sha512": "zbWoimlpWKBIyc9JqNr26f0pnJ7W5M78XCks0J02qXEQykWzIgzR3ZCIO7yZyeqww+Oz2Jh+62GnkErNLyIG9w==",
+      "type": "package",
+      "path": "tmds.dbus/0.20.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Tmds.DBus.dll",
+        "lib/net6.0/Tmds.DBus.xml",
+        "lib/netstandard2.0/Tmds.DBus.dll",
+        "lib/netstandard2.0/Tmds.DBus.xml",
+        "tmds.dbus.0.20.0.nupkg.sha512",
+        "tmds.dbus.nuspec"
+      ]
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net9.0": [
+      "InTheHand.Bluetooth.Permissions >= 8.0.2",
+      "InTheHand.BluetoothLE >= 4.0.41"
+    ]
+  },
+  "packageFolders": {
+    "/Users/docup/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/WT9011BleLib.csproj",
+      "projectName": "WT9011BleLib",
+      "projectPath": "/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/WT9011BleLib.csproj",
+      "packagesPath": "/Users/docup/.nuget/packages/",
+      "outputPath": "/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/Users/docup/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net9.0"
+      ],
+      "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "projectReferences": {}
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.100"
+    },
+    "frameworks": {
+      "net9.0": {
+        "targetAlias": "net9.0",
+        "dependencies": {
+          "InTheHand.Bluetooth.Permissions": {
+            "target": "Package",
+            "version": "[8.0.2, )"
+          },
+          "InTheHand.BluetoothLE": {
+            "target": "Package",
+            "version": "[4.0.41, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.101/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

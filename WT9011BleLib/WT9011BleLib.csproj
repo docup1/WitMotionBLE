@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="InTheHand.Bluetooth.Permissions" Version="8.0.2" />
+        <PackageReference Include="InTheHand.BluetoothLE" Version="4.0.41" />
+    </ItemGroup>
+
+</Project>

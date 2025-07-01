@@ -1,0 +1,12 @@
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/bin/Release/net9.0/WT9011BleLib.deps.json
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/bin/Release/net9.0/WT9011BleLib.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/bin/Release/net9.0/WT9011BleLib.pdb
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.csproj.AssemblyReference.cache
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.GeneratedMSBuildEditorConfig.editorconfig
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.AssemblyInfoInputs.cache
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.AssemblyInfo.cs
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.csproj.CoreCompileInputs.cache
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/refint/WT9011BleLib.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/WT9011BleLib.pdb
+/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/obj/Release/net9.0/ref/WT9011BleLib.dll

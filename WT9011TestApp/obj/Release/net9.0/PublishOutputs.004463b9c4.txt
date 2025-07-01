@@ -1,0 +1,11 @@
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011TestApp
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011TestApp.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011TestApp.deps.json
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011TestApp.runtimeconfig.json
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011TestApp.pdb
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/InTheHand.Bluetooth.Permissions.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/InTheHand.BluetoothLE.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/Linux.Bluetooth.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/Tmds.DBus.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011BleLib.dll
+/Users/docup/RiderProjects/WT9011BleLib/WT9011TestApp/bin/Release/net9.0/publish/WT9011BleLib.pdb

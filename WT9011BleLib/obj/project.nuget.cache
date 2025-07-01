@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "JbzBiVQV7NE=",
+  "success": true,
+  "projectFilePath": "/Users/docup/RiderProjects/WT9011BleLib/WT9011BleLib/WT9011BleLib.csproj",
+  "expectedPackageFiles": [
+    "/Users/docup/.nuget/packages/inthehand.bluetooth.permissions/8.0.2/inthehand.bluetooth.permissions.8.0.2.nupkg.sha512",
+    "/Users/docup/.nuget/packages/inthehand.bluetoothle/4.0.41/inthehand.bluetoothle.4.0.41.nupkg.sha512",
+    "/Users/docup/.nuget/packages/linux.bluetooth/5.67.1/linux.bluetooth.5.67.1.nupkg.sha512",
+    "/Users/docup/.nuget/packages/tmds.dbus/0.20.0/tmds.dbus.0.20.0.nupkg.sha512"
+  ],
+  "logs": []
+}
