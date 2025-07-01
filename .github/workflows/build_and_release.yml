@@ -21,22 +21,25 @@ jobs:
           version: '6.5.0'
           host: 'linux'
           target: 'desktop'
-          modules: 'qtbluetooth'
+          modules: 'qtbluetooth'  # Убедимся, что имя модуля правильное
+          install-deps: true      # Установить системные зависимости
 
       - name: Verify Qt installation
         run: |
           echo "Qt6_DIR: $Qt6_DIR"
-          ls -l $Qt6_DIR/lib/cmake
-          find $Qt6_DIR -name Qt6BluetoothConfig.cmake
+          ls -lR $Qt6_DIR/lib/cmake || true
+          find $Qt6_DIR -name "Qt6*" -type d | grep Bluetooth || true
 
       - name: Configure CMake
         run: |
-          QT6_BLUETOOTH_PATH=$(find $Qt6_DIR -name Qt6BluetoothConfig.cmake | head -1 | xargs dirname)
-          echo "Qt6Bluetooth path: $QT6_BLUETOOTH_PATH"
-          cmake -S . -B build \
-            -DCMAKE_PREFIX_PATH="$Qt6_DIR" \
-            -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
-            -DQt6Bluetooth_DIR="$QT6_BLUETOOTH_PATH"
+          # Проверяем существование файла конфигурации
+          if [ -f "$Qt6_DIR/lib/cmake/Qt6Bluetooth/Qt6BluetoothConfig.cmake" ]; then
+            cmake -S . -B build -DCMAKE_PREFIX_PATH="$Qt6_DIR"
+          else
+            echo "Qt6BluetoothConfig.cmake not found! Available modules:"
+            ls $Qt6_DIR/lib/cmake
+            exit 1
+          fi
 
       - name: Build
         run: cmake --build build --config Release
