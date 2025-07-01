@@ -12,24 +12,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev libbluetooth-dev bluez
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev libbluetooth-dev bluez build-essential cmake python3-pip
 
-      - name: Install Qt 6.6.3
-        uses: jurplel/install-qt-action@v2
-        with:
-          version: '6.6.3'
-          host: 'linux'
-          target: 'desktop'
-          modules: 'qtbase qtdeclarative qtbluetooth'
-          install-deps: true
+      - name: Install aqtinstall
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install aqtinstall
 
-      - name: Set Qt paths
+      - name: Install Qt 6.6.3 with QtBluetooth
+        run: |
+          aqt install-qt linux desktop 6.6.3 gcc_64 -m qtbase qtbluetooth
+        env:
+          AQT_CACHE: $HOME/.aqt
+
+      - name: Set Qt environment variables
         run: |
           echo "Qt6_DIR=$HOME/Qt/6.6.3/gcc_64" >> $GITHUB_ENV
-          echo "PATH=$HOME/Qt/6.6.3/gcc_64/bin:$PATH" >> $GITHUB_ENV
+          echo "$HOME/Qt/6.6.3/gcc_64/bin" >> $GITHUB_PATH
 
-      - name: Verify Qt installation
+      - name: Verify QtBluetooth exists
         run: |
           echo "Qt6_DIR: $Qt6_DIR"
           ls -l $Qt6_DIR/lib/cmake/Qt6Bluetooth || (echo "❌ Qt6Bluetooth not found" && exit 1)
