@@ -12,19 +12,28 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install system dependencies
-        run: sudo apt-get update && sudo apt-get install -y libbluetooth-dev bluez qt6-base-dev qt6-tools-dev-tools qt6-multimedia-dev
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev libbluetooth-dev bluez
 
-      - name: Install Qt with Bluetooth
+      - name: Install Qt 6.5.0
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '6.5.0'
+          host: 'linux'
+          target: 'desktop'
+          modules: 'qtbase qtdeclarative qtbluetooth'
+          install-deps: true
+
+      - name: Set Qt paths
         run: |
-          sudo apt-get install -y qt6-bluetooth-dev
-          echo "Qt6_DIR=/usr/lib/x86_64-linux-gnu/cmake/Qt6" >> $GITHUB_ENV
+          echo "Qt6_DIR=$HOME/Qt/6.5.0/gcc_64" >> $GITHUB_ENV
+          echo "PATH=$HOME/Qt/6.5.0/gcc_64/bin:$PATH" >> $GITHUB_ENV
 
       - name: Verify Qt installation
         run: |
           echo "Qt6_DIR: $Qt6_DIR"
-          ls -l $Qt6_DIR
-          ls -l $Qt6_DIR/Qt6Bluetooth
+          ls -l $Qt6_DIR/lib/cmake/Qt6Bluetooth
+          ls -l $Qt6_DIR/lib/cmake/Qt6Bluetooth/Qt6BluetoothConfig.cmake
 
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_PREFIX_PATH="$Qt6_DIR"
