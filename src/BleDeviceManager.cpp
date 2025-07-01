@@ -1,5 +1,4 @@
 #include "BleDeviceManager.h"
-#include <QBluetoothUuid>
 #include <QDebug>
 
 BleDeviceManager::BleDeviceManager(QObject* parent) : QObject(parent) {
@@ -28,7 +27,7 @@ void BleDeviceManager::connectToDevice(const QString& address) {
         return d.address().toString() == address;
     });
     if (device == m_devices.end()) {
-        emit errorOccurred("Device not found in scanned list");
+        emit errorOccurred("Device not found");
         return;
     }
 
@@ -51,7 +50,6 @@ void BleDeviceManager::onDeviceDisconnected() {
 
 void BleDeviceManager::onServiceDiscovered(const QBluetoothUuid& uuid) {
     Q_UNUSED(uuid);
-    // Мы будем искать в onServiceScanDone
 }
 
 void BleDeviceManager::onServiceScanDone() {
@@ -66,28 +64,4 @@ void BleDeviceManager::onServiceScanDone() {
                 for (auto& ch : chars) {
                     if (ch.properties() & QLowEnergyCharacteristic::Notify) {
                         m_notifyChar = ch;
-                        connect(service, &QLowEnergyService::characteristicChanged, this, &BleDeviceManager::onCharacteristicChanged);
-                        service->subscribeToNotification(ch);
-                        emit connected();
-                        m_service = service;
-                        return;
-                    }
-                }
-            }
-        });
-
-        service->discoverDetails();
-    }
-}
-
-void BleDeviceManager::onCharacteristicChanged(const QLowEnergyCharacteristic& c, const QByteArray& value) {
-    if (c.uuid() == m_notifyChar.uuid()) {
-        if (m_dataCallback) {
-            m_dataCallback(value);
-        }
-    }
-}
-
-void BleDeviceManager::setDataCallback(DataCallback cb) {
-    m_dataCallback = std::move(cb);
-}
+                        connect(service, &QLowEnergyService::characteristicChanged, this, &BleDeviceManager::onCharacteristicChanged
