@@ -21,10 +21,10 @@ jobs:
           modules: 'qtbluetooth'
 
       - name: List installed Qt modules
-        run: ls -lR $HOME/Qt/6.5.0/gcc_64/lib/cmake
+        run: ls -lR $Qt6_DIR/lib/cmake  # Исправленный путь
 
       - name: Configure CMake
-        run: cmake -S . -B build -DCMAKE_PREFIX_PATH=$HOME/Qt/6.5.0/gcc_64
+        run: cmake -S . -B build -DCMAKE_PREFIX_PATH=$Qt6_DIR  # Исправленный путь
 
       - name: Build
         run: cmake --build build --config Release
