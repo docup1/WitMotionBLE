@@ -3,7 +3,7 @@ name: Build and Release WT9011 BLE
 on:
   push:
     tags:
-      - 'v*'  # Запуск при пуше тега, например: v1.0.0
+      - 'v*'
 
 jobs:
   build:
@@ -31,45 +31,61 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore WT9011BleLib.sln
 
-      - name: Build library
-        run: dotnet build WT9011BleLib/WT9011BleLib.csproj -c Release --no-restore
+      - name: Build WT9011BleLib
+        run: dotnet build WT9011BleLib/WT9011BleLib.csproj -c Release --no-restore -o output/WT9011BleLib
 
-      - name: Publish self-contained test app
+      - name: Publish WT9011TestApp (self-contained)
         run: dotnet publish WT9011TestApp/WT9011TestApp.csproj -c Release -r ${{ matrix.rid }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish/${{ matrix.rid }}
 
-      - name: Make test app executable on macOS/Linux
+      - name: Make test app executable (Unix)
         if: matrix.os != 'windows-latest'
         run: chmod +x publish/${{ matrix.rid }}/WT9011TestApp
 
-      - name: Upload artifacts
+      - name: Upload test app artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.rid }}-artifacts
           path: publish/${{ matrix.rid }}
+
+      - name: Upload library DLL artifact
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: WT9011BleLib-dll
+          path: output/WT9011BleLib/WT9011BleLib.dll
 
   release:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download all artifacts
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./artifacts
 
-      - name: Zip each platform build
+      - name: Zip each test app build
         run: |
           mkdir release
-          for dir in ./artifacts/*; do
+          for dir in ./artifacts/*-artifacts; do
             name=$(basename "$dir")
             zip -r "release/${name}.zip" "$dir"
           done
 
-      - name: Create GitHub Release
+      - name: Copy DLL from WT9011BleLib-dll
+        run: |
+          cp artifacts/WT9011BleLib-dll/WT9011BleLib.dll release/
+
+      - name: Create GitHub Release with test apps + DLL
         uses: softprops/action-gh-release@v2
         with:
           name: WT9011 BLE Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
-          files: release/*.zip
-          token: ${{ secrets.GH_PAT }}  # ⬅️ нужен PAT с правами repo
+          files: |
+            release/*.zip
+            release/WT9011BleLib.dll
+          token: ${{ secrets.GH_PAT }}
 
