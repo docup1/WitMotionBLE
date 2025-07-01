@@ -1,9 +1,9 @@
-name: Build and Release WT9011 BLE Library
+name: Build and Release WT9011 BLE
 
 on:
   push:
     tags:
-      - 'v*'  # Запуск при пуше тега v1.0.0, v1.1.0 и т.д.
+      - 'v*'  # Запуск при пуше тега, например: v1.0.0
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
@@ -31,13 +31,17 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore WT9011BleLib.sln
 
-      - name: Build WT9011BleLib
+      - name: Build library
         run: dotnet build WT9011BleLib/WT9011BleLib.csproj -c Release --no-restore
 
-      - name: Publish WT9011TestApp
-        run: dotnet publish WT9011TestApp/WT9011TestApp.csproj -c Release -r ${{ matrix.rid }} --self-contained false -o publish/${{ matrix.rid }}
+      - name: Publish self-contained test app
+        run: dotnet publish WT9011TestApp/WT9011TestApp.csproj -c Release -r ${{ matrix.rid }} --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish/${{ matrix.rid }}
 
-      - name: Upload build artifact
+      - name: Make test app executable on macOS/Linux
+        if: matrix.os != 'windows-latest'
+        run: chmod +x publish/${{ matrix.rid }}/WT9011TestApp
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.rid }}-artifacts
@@ -48,15 +52,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./artifacts
 
-      - name: Zip artifacts
+      - name: Zip each platform build
         run: |
           mkdir release
           for dir in ./artifacts/*; do
@@ -67,8 +68,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: WT9011 BLE ${{ github.ref_name }}
+          name: WT9011 BLE Release ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           files: release/*.zip
-          token: ${{ secrets.GH_PAT }}  # ⬅️ Убедись, что токен добавлен
+          token: ${{ secrets.GH_PAT }}  # ⬅️ нужен PAT с правами repo
 
