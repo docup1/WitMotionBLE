@@ -8,7 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
 
@@ -19,6 +18,16 @@ jobs:
           host: 'linux'
           target: 'desktop'
           modules: bluetooth
+
+      - name: Check Qt Bluetooth presence
+        run: |
+          if [ ! -d "$HOME/Qt/6.5.0/gcc_64/lib/cmake/Qt6Bluetooth" ]; then
+            echo "Qt6Bluetooth module not found, installing via apt"
+            sudo apt update
+            sudo apt install -y qt6-base-dev qt6-bluetooth-dev
+          else
+            echo "Qt6Bluetooth module found"
+          fi
 
       - name: Configure CMake
         run: cmake -S . -B build -DCMAKE_PREFIX_PATH=$HOME/Qt/6.5.0/gcc_64/lib/cmake
