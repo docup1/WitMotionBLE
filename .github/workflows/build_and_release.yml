@@ -27,14 +27,16 @@ jobs:
         run: |
           echo "Qt6_DIR: $Qt6_DIR"
           ls -l $Qt6_DIR/lib/cmake
-          ls -l $Qt6_DIR/lib/cmake/Qt6*
+          find $Qt6_DIR -name Qt6BluetoothConfig.cmake
 
       - name: Configure CMake
         run: |
+          QT6_BLUETOOTH_PATH=$(find $Qt6_DIR -name Qt6BluetoothConfig.cmake | head -1 | xargs dirname)
+          echo "Qt6Bluetooth path: $QT6_BLUETOOTH_PATH"
           cmake -S . -B build \
             -DCMAKE_PREFIX_PATH="$Qt6_DIR" \
             -DQt6_DIR="$Qt6_DIR/lib/cmake/Qt6" \
-            -DQt6Bluetooth_DIR="$Qt6_DIR/lib/cmake/Qt6Bluetooth"
+            -DQt6Bluetooth_DIR="$QT6_BLUETOOTH_PATH"
 
       - name: Build
         run: cmake --build build --config Release
