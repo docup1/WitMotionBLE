@@ -3,7 +3,7 @@ name: Build and Release WT9011 BLE Library
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  # Запуск при пуше тега v1.0.0, v1.1.0 и т.д.
 
 jobs:
   build:
@@ -34,10 +34,10 @@ jobs:
       - name: Build WT9011BleLib
         run: dotnet build WT9011BleLib/WT9011BleLib.csproj -c Release --no-restore
 
-      - name: Publish Test App
+      - name: Publish WT9011TestApp
         run: dotnet publish WT9011TestApp/WT9011TestApp.csproj -c Release -r ${{ matrix.rid }} --self-contained false -o publish/${{ matrix.rid }}
 
-      - name: Upload artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.rid }}-artifacts
@@ -46,26 +46,29 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./artifacts
 
-      - name: Create release archive
+      - name: Zip artifacts
         run: |
           mkdir release
-          for d in ./artifacts/*; do
-            name=$(basename "$d")
-            zip -r release/$name.zip $d
+          for dir in ./artifacts/*; do
+            name=$(basename "$dir")
+            zip -r "release/${name}.zip" "$dir"
           done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: WT9011 BLE Release ${{ github.ref_name }}
+          name: WT9011 BLE ${{ github.ref_name }}
           tag_name: ${{ github.ref_name }}
           files: release/*.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT }}  # ⬅️ Убедись, что токен добавлен
 
