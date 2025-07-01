@@ -10,26 +10,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install Qt 6 with Bluetooth module
-        uses: jurplel/install-qt-action@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          version: '6.5.0'
-          host: 'linux'
-          target: 'desktop'
-          modules: 'qtconnectivity qtbase'
-          setup-python: false
+          python-version: '3.x'
           
-      - name: Install additional dependencies
+      - name: Install aqt
+        run: pip install aqtinstall
+        
+      - name: List available Qt modules
+        run: aqt list-qt linux desktop --modules 6.5.0
+        
+      - name: Install Qt 6 with Bluetooth
+        run: |
+          aqt install-qt linux desktop 6.5.0 --outputdir $HOME/Qt --modules qtconnectivity
+          echo "Qt6_DIR=$HOME/Qt/6.5.0/gcc_64/lib/cmake/Qt6" >> $GITHUB_ENV
+          echo "CMAKE_PREFIX_PATH=$HOME/Qt/6.5.0/gcc_64/lib/cmake" >> $GITHUB_ENV
+          
+      - name: Install build dependencies
         run: |
           sudo apt update
           sudo apt install -y build-essential cmake
           
-      - name: Verify Qt Bluetooth installation
+      - name: Verify Qt installation
         run: |
-          echo "Qt installation directory: $Qt6_DIR"
+          echo "Qt6_DIR: $Qt6_DIR"
           echo "CMAKE_PREFIX_PATH: $CMAKE_PREFIX_PATH"
-          ls -la $Qt6_DIR/../.. || true
-          find $Qt6_DIR -name "*Bluetooth*" || true
+          ls -la $HOME/Qt/6.5.0/gcc_64/lib/cmake/Qt6* || true
           
       - name: Configure CMake
         run: |
@@ -40,7 +47,7 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
         
-      - name: Create release directory
+      - name: Prepare release
         run: |
           mkdir -p release
           cp build/wt9011_ble release/
