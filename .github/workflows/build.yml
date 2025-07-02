@@ -1,4 +1,4 @@
-name: Build DLL and Qt Example
+name: Build DLL and PyQt App
 
 on:
   push:
@@ -7,11 +7,10 @@ on:
 
 jobs:
   build:
-    name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -24,40 +23,43 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pybind11
+          pip install pybind11 pyqt5 pyinstaller
 
-      - name: Install Qt and CMake dependencies (Linux/macOS)
-        if: runner.os != 'Windows'
+      - name: Install system deps (Linux)
+        if: runner.os == 'Linux'
         run: |
-          sudo apt update || true
-          sudo apt install -y cmake ninja-build qtbase5-dev qtdeclarative5-dev || true
+          sudo apt update
+          sudo apt install -y qtbase5-dev cmake build-essential ninja-build
 
-      - name: Install CMake (Windows)
+      - name: Install system deps (macOS)
+        if: runner.os == 'macOS'
+        run: brew install qt cmake ninja
+
+      - name: Install system deps (Windows)
         if: runner.os == 'Windows'
-        uses: lukka/get-cmake@latest
+        run: choco install -y cmake ninja python qt5
 
-      - name: Configure CMake
+      - name: Build DLL with embedded Python
         run: |
           cmake -S dll_lib -B build -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build
-        run: |
           cmake --build build --config Release
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Build PyQt GUI App with PyInstaller
+        run: |
+          pyinstaller examples/example_ui.py --onefile --name example_ui
+
+      - name: Prepare artifacts
+        run: |
+          mkdir -p output
+          cp build/*wt9011lib* output/ || true
+          cp dist/example_ui* output/ || true
+
+      - uses: actions/upload-artifact@v4
         with:
-          name: wt9011-${{ matrix.os }}
-          path: |
-            build/*.dll
-            build/*.so
-            build/*.dylib
-            build/*.exe
-            build/*.app
-            build/example*
+          name: wt9011-${{ runner.os }}
+          path: output/*
 
   release:
-    name: Create GitHub Release
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -66,13 +68,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download all build artifacts
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
 
-      - name: Create Release
+      - name: Zip artifacts by platform
+        run: |
+          cd artifacts
+          for dir in *; do zip -r "../${dir}.zip" "$dir"; done
+
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            artifacts/**/*
+            *.zip
