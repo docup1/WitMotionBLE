@@ -23,7 +23,7 @@ jobs:
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pybind11 pyqt5 pyinstaller
+          pip install pybind11 pyqt5 pyqtgraph pyinstaller
 
       - name: Install system deps (Linux)
         if: runner.os == 'Linux'
@@ -50,12 +50,13 @@ jobs:
 
       - name: Build PyQt GUI App with PyInstaller
         run: |
-          pyinstaller examples/example_ui.py --onefile --name example_ui
+          pyinstaller examples/example_ui.py --onefile --name example_ui --hidden-import=pyqtgraph
 
       - name: Prepare artifacts
         run: |
           mkdir -p output
           cp build/*wt9011lib* output/ || true
+          cp build/Release/*wt9011lib* output/ || true  # <-- для Windows
           cp dist/example_ui* output/ || true
 
       - uses: actions/upload-artifact@v4
