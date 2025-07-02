@@ -5,24 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82d80d2c-44cd-43be-9c0b-144fbd09b810" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflow/build.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/WT9011Lib.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dll_lib/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dll_lib/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dll_lib/py_module.cpp " afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/example_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/example_functions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/example_ui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ble_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/sensor_commands.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/sensor_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dll_lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dll_lib/CMakeLists.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +16,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "docup1"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/docup1/WitMotionBLE.git",
+    "accountId": "09242eb2-bcfb-4179-ac85-f4781674e1b2"
+  }
+}]]></component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -162,7 +158,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1751419405667</updated>
-      <workItem from="1751419406691" duration="5987000" />
+      <workItem from="1751419406691" duration="6508000" />
     </task>
     <servers />
   </component>
