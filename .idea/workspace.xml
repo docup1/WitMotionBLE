@@ -7,10 +7,6 @@
     <list default="true" id="82d80d2c-44cd-43be-9c0b-144fbd09b810" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dll_lib/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dll_lib/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dll_lib/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/dll_lib/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dll_lib/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/dll_lib/wt9011_dll.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dll_lib/py_module.cpp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +160,7 @@
       <option name="presentableId" value="Default" />
       <updated>1751419405667</updated>
       <workItem from="1751419406691" duration="10176000" />
-      <workItem from="1751925560489" duration="5403000" />
+      <workItem from="1751925560489" duration="5704000" />
     </task>
     <servers />
   </component>
