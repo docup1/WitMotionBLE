@@ -20,8 +20,9 @@ jobs:
 
     - name: Install Python dependencies
       run: |
-        python -m pip install --upgrade pip; pip install pybind11 bleak
-      shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+        & "C:\hostedtoolcache\windows\Python\3.11.9\x64\python.exe" -m pip install --upgrade pip
+        & "C:\hostedtoolcache\windows\Python\3.11.9\x64\python.exe" -m pip install pybind11 bleak
+      shell: pwsh # Используем стандартный PowerShell 7 без кастомного wrapper
       env:
         pythonLocation: C:\hostedtoolcache\windows\Python\3.11.9\x64
         PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.11.9\x64/lib/pkgconfig
