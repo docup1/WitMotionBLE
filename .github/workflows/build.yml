@@ -35,19 +35,19 @@ jobs:
         cd build
         cmake -G "Visual Studio 17 2022" -A x64 .. || cmake -G "Visual Studio 16 2019" -A x64 ..
         cmake --build . --config Release
-      shell: pwsh # Используем стандартный PowerShell 7 вместо кастомного wrapper
+      shell: pwsh # Используем стандартный PowerShell 7
 
     - name: Copy Python files to lib directory
       run: |
         mkdir build\Release\lib
         copy lib\*.py build\Release\lib\
-      shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+      shell: pwsh # Используем стандартный PowerShell 7
 
     - name: Package release
       run: |
         cd build\Release
         7z a wt9011_release.zip wt9011_dll.dll lib\*.py
-      shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+      shell: pwsh # Используем стандартный PowerShell 7
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
