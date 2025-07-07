@@ -168,11 +168,16 @@ extern "C" __declspec(dllexport) bool wt9011_disconnect() {
     }
 }
 
+// Convert Python bytes to const unsigned char* and length
+bool send_pybytes(py::object py_bytes) {
+    auto str = py_bytes.cast<std::string>();
+    return wt9011_send(reinterpret_cast<const unsigned char*>(str.data()), static_cast<int>(str.size()));
+}
+
 // Command: Zeroing
 extern "C" __declspec(dllexport) bool wt9011_zeroing() {
     try {
-        auto cmd = commands_class.attr("build_command_zeroing")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_zeroing")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -181,8 +186,7 @@ extern "C" __declspec(dllexport) bool wt9011_zeroing() {
 // Command: Calibration
 extern "C" __declspec(dllexport) bool wt9011_calibration() {
     try {
-        auto cmd = commands_class.attr("build_command_calibration")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_calibration")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -191,8 +195,7 @@ extern "C" __declspec(dllexport) bool wt9011_calibration() {
 // Command: Save settings
 extern "C" __declspec(dllexport) bool wt9011_save_settings() {
     try {
-        auto cmd = commands_class.attr("build_command_save_settings")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_save_settings")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -201,8 +204,7 @@ extern "C" __declspec(dllexport) bool wt9011_save_settings() {
 // Command: Factory reset
 extern "C" __declspec(dllexport) bool wt9011_factory_reset() {
     try {
-        auto cmd = commands_class.attr("build_command_factory_reset")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_factory_reset")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -211,8 +213,7 @@ extern "C" __declspec(dllexport) bool wt9011_factory_reset() {
 // Command: Sleep
 extern "C" __declspec(dllexport) bool wt9011_sleep() {
     try {
-        auto cmd = commands_class.attr("build_command_sleep")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_sleep")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -221,8 +222,7 @@ extern "C" __declspec(dllexport) bool wt9011_sleep() {
 // Command: Wakeup
 extern "C" __declspec(dllexport) bool wt9011_wakeup() {
     try {
-        auto cmd = commands_class.attr("build_command_wakeup")();
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_wakeup")());
     } catch (const std::exception& e) {
         return false;
     }
@@ -231,8 +231,7 @@ extern "C" __declspec(dllexport) bool wt9011_wakeup() {
 // Command: Set return rate
 extern "C" __declspec(dllexport) bool wt9011_set_return_rate(int rate_hz) {
     try {
-        auto cmd = commands_class.attr("build_command_set_return_rate")(rate_hz);
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_set_return_rate")(rate_hz));
     } catch (const std::exception& e) {
         return false;
     }
@@ -241,8 +240,7 @@ extern "C" __declspec(dllexport) bool wt9011_set_return_rate(int rate_hz) {
 // Command: Enable/disable accelerometer
 extern "C" __declspec(dllexport) bool wt9011_accel_enable(bool enable) {
     try {
-        auto cmd = commands_class.attr("build_command_accel_enable")(enable);
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_accel_enable")(enable));
     } catch (const std::exception& e) {
         return false;
     }
@@ -251,8 +249,7 @@ extern "C" __declspec(dllexport) bool wt9011_accel_enable(bool enable) {
 // Command: Enable/disable gyroscope
 extern "C" __declspec(dllexport) bool wt9011_gyro_enable(bool enable) {
     try {
-        auto cmd = commands_class.attr("build_command_gyro_enable")(enable);
-        return wt9011_send(reinterpret_cast<const unsigned char*>(cmd.cast<py::bytes>().request().ptr), 4);
+        return send_pybytes(commands_class.attr("build_command_gyro_enable")(enable));
     } catch (const std::exception& e) {
         return false;
     }
