@@ -3,11 +3,11 @@ name: Build and Release WT9011 DLL
 on:
   push:
     tags:
-      - 'v*.*.*' # Триггер на теги вроде v1.0.0
+      - 'v*.*.*' # Запуск при пуше тега вроде v1.0.0
 
 jobs:
   build:
-    runs-on: windows-latest # Используем Windows для сборки DLL
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
@@ -16,38 +16,38 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11' # Укажите нужную версию Python
+        python-version: '3.11'
 
     - name: Install Python dependencies
       run: |
-        & "C:\hostedtoolcache\windows\Python\3.11.9\x64\python.exe" -m pip install --upgrade pip
-        & "C:\hostedtoolcache\windows\Python\3.11.9\x64\python.exe" -m pip install pybind11 bleak
-      shell: pwsh # Используем стандартный PowerShell 7
+        & "$env:pythonLocation\python.exe" -m pip install --upgrade pip
+        & "$env:pythonLocation\python.exe" -m pip install pybind11 bleak
+      shell: pwsh
 
     - name: Install CMake
       uses: jwlawson/actions-setup-cmake@v1.13
       with:
-        cmake-version: '3.22.x' # Обновлено до версии, поддерживающей VS 2022
+        cmake-version: '3.22.x'
 
     - name: Create build directory and build
       run: |
         mkdir build
         cd build
-        cmake -G "Visual Studio 17 2022" -A x64 .. || cmake -G "Visual Studio 16 2019" -A x64 ..
+        cmake -G "Visual Studio 17 2022" -A x64 ../dll_lib || cmake -G "Visual Studio 16 2019" -A x64 ../dll_lib
         cmake --build . --config Release
-      shell: pwsh # Используем стандартный PowerShell 7
+      shell: pwsh
 
     - name: Copy Python files to lib directory
       run: |
         mkdir build\Release\lib
         copy lib\*.py build\Release\lib\
-      shell: pwsh # Используем стандартный PowerShell 7
+      shell: pwsh
 
     - name: Package release
       run: |
         cd build\Release
         7z a wt9011_release.zip wt9011_dll.dll lib\*.py
-      shell: pwsh # Используем стандартный PowerShell 7
+      shell: pwsh
 
     - name: Create Release
       uses: softprops/action-gh-release@v1
