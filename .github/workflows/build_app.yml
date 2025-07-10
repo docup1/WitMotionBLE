@@ -10,11 +10,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Set up MSYS2 with MinGW for building
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -32,37 +30,29 @@ jobs:
             mingw-w64-x86_64-winpthreads
             mingw-w64-x86_64-libwinpthread-git
 
-      # Set up Python virtual environment
       - name: Set up Python virtual environment
         shell: msys2 {0}
         run: |
           python -m venv venv
-          ./venv/Scripts/activate.bat
-          python -m pip install --upgrade pip
-          python -m pip install bleak --no-build-isolation
+          ./venv/Scripts/python.exe -m pip install --upgrade pip
+          ./venv/Scripts/python.exe -m pip install bleak --no-build-isolation
 
-      # Copy Python scripts to build directory
       - name: Copy Python scripts
         shell: msys2 {0}
         run: |
-          ./venv/Scripts/activate.bat
           mkdir -p build
           cp *.py build/
 
-      # Configure and build the project
       - name: Build with qmake
         shell: msys2 {0}
         run: |
-          ./venv/Scripts/activate.bat
           cd build
           /mingw64/bin/qmake ../wt9011_app.pro
           mingw32-make -j$(nproc)
 
-      # Package the executable with dependencies
       - name: Package executable
         shell: msys2 {0}
         run: |
-          ./venv/Scripts/activate.bat
           mkdir -p release
           cp build/release/wt9011_app.exe release/
           cp *.py release/
@@ -74,14 +64,12 @@ jobs:
           cp /mingw64/bin/libstdc++-6.dll release/
           cp /mingw64/bin/libwinpthread-1.dll release/
 
-      # Create zip archive
       - name: Create zip archive
         shell: msys2 {0}
         run: |
           cd release
           7z a wt9011_app_${{ github.ref_name }}.zip .
 
-      # Upload artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
