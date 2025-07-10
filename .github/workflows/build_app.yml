@@ -10,11 +10,18 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # 1. Клонирование репозитория
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Установка MSYS2 и необходимых пакетов
+      # Python setup — чистый venv
+      - name: Set up Python and install packages
+        shell: cmd
+        run: |
+          python -m venv venv
+          venv\Scripts\python.exe -m pip install --upgrade pip
+          venv\Scripts\python.exe -m pip install bleak pyqt5
+
+      # Установка MSYS2 и инструментов сборки
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -24,58 +31,48 @@ jobs:
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-make
             mingw-w64-x86_64-qt5
-            mingw-w64-x86_64-python
-            mingw-w64-x86_64-python-pip
-            mingw-w64-x86_64-pybind11
-            mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-pkgconf
-            mingw-w64-x86_64-libwinpthread-git
+            mingw-w64-x86_64-toolchain
 
-      # 3. Установка Python-зависимостей (без venv)
-      - name: Install Python dependencies
-        shell: msys2 {0}
+      # Копирование файлов
+      - name: Copy Python files to build/
         run: |
-          pip install --upgrade pip
-          pip install bleak --no-build-isolation
+          mkdir build
+          copy *.py build
 
-      # 4. Создание директории сборки и копирование скриптов
-      - name: Copy Python scripts
-        shell: msys2 {0}
-        run: |
-          mkdir -p build
-          cp *.py build/
-
-      # 5. Сборка с помощью qmake и mingw32-make
-      - name: Build application
+      # Сборка с qmake
+      - name: Build with qmake
         shell: msys2 {0}
         run: |
           cd build
           /mingw64/bin/qmake ../wt9011_app.pro
           mingw32-make -j$(nproc)
 
-      # 6. Подготовка release-директории
-      - name: Package executable and dependencies
+      # Подготовка релиза
+      - name: Prepare release
         shell: msys2 {0}
         run: |
           mkdir -p release
           cp build/release/wt9011_app.exe release/
           cp *.py release/
           /mingw64/bin/windeployqt release/wt9011_app.exe
-          cp /mingw64/bin/libpython3*.dll release/
           cp /mingw64/bin/libgcc_s_seh-1.dll release/
           cp /mingw64/bin/libstdc++-6.dll release/
           cp /mingw64/bin/libwinpthread-1.dll release/
 
-      # 7. Архивирование
-      - name: Create zip archive
-        shell: msys2 {0}
+      # Копирование Python зависимостей
+      - name: Copy Python site-packages
         run: |
-          cd release
-          7z a wt9011_app_${{ github.ref_name }}.zip .
+          xcopy /E /I venv\Lib\site-packages release\site-packages
 
-      # 8. Загрузка артефакта
+      # Архивация
+      - name: Zip release
+        run: |
+          7z a wt9011_app_${{ github.ref_name }}.zip .\release\*
+
+      # Загрузка артефакта
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: wt9011_app_${{ github.ref_name }}
-          path: release/wt9011_app_${{ github.ref_name }}.zip
+          path: wt9011_app_${{ github.ref_name }}.zip
