@@ -70,7 +70,7 @@ extern "C" __declspec(dllexport) bool wt9011_init() {
         }
         py::module_ sys = py::module_::import("sys");
         sys.attr("path").attr("append")("./lib"); // Add lib directory to Python path
-        ble_manager_class = py::module_::import("ble_manager").attr("BLEManager");
+        ble_manager_class = py::module_::import("ble_manager").attr("BLEManager");]
         parser_class = py::module_::import("sensor_parser").attr("WT9011Parser");
         commands_class = py::module_::import("sensor_commands").attr("WT9011Commands");
         ble_manager_instance = ble_manager_class();
