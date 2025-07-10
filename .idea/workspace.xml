@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82d80d2c-44cd-43be-9c0b-144fbd09b810" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/examples/app/lib/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/lib/ble_manager.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/lib/sensor_commands.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/lib/sensor_parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/main.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/qcustomplot.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/qcustomplot.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/wt9011_app.pro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/wt9011_interface.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/app/wt9011_interface.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dll_lib/wt9011_dll.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/dll_lib/wt9011_dll.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.github/workflows/build_app.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

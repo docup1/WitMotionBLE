@@ -1,0 +1,80 @@
+name: Build Windows Executable
+
+on:
+  push:
+    tags:
+      - 'app_v*.*.*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up MSYS2 with MinGW for building
+      - name: Set up MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-qt5
+            mingw-w64-x86_64-python
+            mingw-w64-x86_64-python-pip
+            mingw-w64-x86_64-pybind11
+            mingw-w64-x86_64-toolchain
+
+      # Install Python dependencies
+      - name: Install Python dependencies
+        shell: msys2 {0}
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bleak
+
+      # Copy Python scripts to build directory
+      - name: Copy Python scripts
+        shell: msys2 {0}
+        run: |
+          mkdir -p build
+          cp *.py build/
+
+      # Configure and build the project
+      - name: Build with qmake
+        shell: msys2 {0}
+        run: |
+          cd build
+          /mingw64/bin/qmake ../wt9011_app.pro
+          mingw32-make -j$(nproc)
+
+      # Package the executable with dependencies
+      - name: Package executable
+        shell: msys2 {0}
+        run: |
+          mkdir -p release
+          cp build/release/wt9011_app.exe release/
+          cp *.py release/
+          /mingw64/bin/windeployqt release/wt9011_app.exe
+          cp /mingw64/bin/libpython3*.dll release/
+          cp -r /mingw64/lib/python3* release/
+          cp /mingw64/bin/libgcc_s_seh-1.dll release/
+          cp /mingw64/bin/libstdc++-6.dll release/
+          cp /mingw64/bin/libwinpthread-1.dll release/
+
+      # Create zip archive
+      - name: Create zip archive
+        shell: msys2 {0}
+        run: |
+          cd release
+          7z a wt9011_app_${{ github.ref_name }}.zip .
+
+      # Upload artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wt9011_app_${{ github.ref_name }}
+          path: release/wt9011_app_${{ github.ref_name }}.zip
