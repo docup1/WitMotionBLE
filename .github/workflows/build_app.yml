@@ -44,8 +44,8 @@ jobs:
       - name: Build with qmake
         shell: msys2 {0}
         run: |
-          cd build
-          /mingw64/bin/qmake ../wt9011_app.pro
+          cd examples/app
+          /mingw64/bin/qmake wt9011_app.pro
           mingw32-make -j$(nproc)
 
       # Подготовка релиза
