@@ -37,7 +37,7 @@ jobs:
         shell: msys2 {0}
         run: |
           python -m venv venv
-          source venv/Scripts/activate
+          ./venv/Scripts/activate.bat
           python -m pip install --upgrade pip
           python -m pip install bleak --no-build-isolation
 
@@ -45,6 +45,7 @@ jobs:
       - name: Copy Python scripts
         shell: msys2 {0}
         run: |
+          ./venv/Scripts/activate.bat
           mkdir -p build
           cp *.py build/
 
@@ -52,7 +53,7 @@ jobs:
       - name: Build with qmake
         shell: msys2 {0}
         run: |
-          source venv/Scripts/activate
+          ./venv/Scripts/activate.bat
           cd build
           /mingw64/bin/qmake ../wt9011_app.pro
           mingw32-make -j$(nproc)
@@ -61,7 +62,7 @@ jobs:
       - name: Package executable
         shell: msys2 {0}
         run: |
-          source venv/Scripts/activate
+          ./venv/Scripts/activate.bat
           mkdir -p release
           cp build/release/wt9011_app.exe release/
           cp *.py release/
