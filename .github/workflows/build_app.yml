@@ -10,9 +10,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # 1. Клонирование репозитория
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Установка MSYS2 и необходимых пакетов
       - name: Set up MSYS2
         uses: msys2/setup-msys2@v2
         with:
@@ -27,30 +29,32 @@ jobs:
             mingw-w64-x86_64-pybind11
             mingw-w64-x86_64-toolchain
             mingw-w64-x86_64-pkgconf
-            mingw-w64-x86_64-winpthreads
             mingw-w64-x86_64-libwinpthread-git
 
-      - name: Set up Python virtual environment
+      # 3. Установка Python-зависимостей (без venv)
+      - name: Install Python dependencies
         shell: msys2 {0}
         run: |
-          python -m venv venv
-          ./venv/Scripts/python.exe -m pip install --upgrade pip
-          ./venv/Scripts/python.exe -m pip install bleak --no-build-isolation
+          pip install --upgrade pip
+          pip install bleak --no-build-isolation
 
+      # 4. Создание директории сборки и копирование скриптов
       - name: Copy Python scripts
         shell: msys2 {0}
         run: |
           mkdir -p build
           cp *.py build/
 
-      - name: Build with qmake
+      # 5. Сборка с помощью qmake и mingw32-make
+      - name: Build application
         shell: msys2 {0}
         run: |
           cd build
           /mingw64/bin/qmake ../wt9011_app.pro
           mingw32-make -j$(nproc)
 
-      - name: Package executable
+      # 6. Подготовка release-директории
+      - name: Package executable and dependencies
         shell: msys2 {0}
         run: |
           mkdir -p release
@@ -58,18 +62,18 @@ jobs:
           cp *.py release/
           /mingw64/bin/windeployqt release/wt9011_app.exe
           cp /mingw64/bin/libpython3*.dll release/
-          cp -r /mingw64/lib/python3* release/
-          cp -r venv/Lib/site-packages release/site-packages
           cp /mingw64/bin/libgcc_s_seh-1.dll release/
           cp /mingw64/bin/libstdc++-6.dll release/
           cp /mingw64/bin/libwinpthread-1.dll release/
 
+      # 7. Архивирование
       - name: Create zip archive
         shell: msys2 {0}
         run: |
           cd release
           7z a wt9011_app_${{ github.ref_name }}.zip .
 
+      # 8. Загрузка артефакта
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
