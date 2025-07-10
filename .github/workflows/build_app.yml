@@ -45,7 +45,7 @@ jobs:
         shell: msys2 {0}
         run: |
           cd examples/app
-          /mingw64/bin/qmake wt9011_app.pro
+          /mingw64/bin/qmake "INCLUDEPATH+=/mingw64/include" wt9011_app.pro
           mingw32-make -j$(nproc)
 
       # Подготовка релиза
